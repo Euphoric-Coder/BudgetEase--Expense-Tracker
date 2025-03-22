@@ -98,8 +98,6 @@ export const notifyBudgetLimit = async () => {
     .groupBy(Budgets.id)
     .orderBy(desc(Budgets.createdAt));
 
-  console.log(budgets);
-
   for (const budget of budgets) {
     if (
       budget.ninetyPercent &&

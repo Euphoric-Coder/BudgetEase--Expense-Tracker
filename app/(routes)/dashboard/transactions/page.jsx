@@ -252,7 +252,7 @@ export default function Transactions() {
               placeholder="Search transactions by name, description, or category..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-6 py-4 rounded-full shadow-lg border transition-all duration-300 bg-white dark:bg-gray-900 dark:text-white text-gray-800 border-gray-300 dark:border-gray-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500 dark:focus:ring-purple-600"
+              className="w-full px-6 py-4 rounded-full shadow-lg border-2 transition-all duration-300 bg-white dark:bg-gray-900 dark:text-white text-gray-800 border-gray-300 dark:border-gray-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500 dark:focus:ring-purple-600"
             />
 
             {/* Clear Button Inside Search Bar */}
@@ -450,10 +450,7 @@ export default function Transactions() {
                 Reset Filters
               </button>
             )}
-            <Button
-              onClick={exportTransactions}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-white bg-gradient-to-r from-blue-500 via-cyan-600 to-teal-500 hover:from-blue-600 hover:via-cyan-700 hover:to-teal-600 transition-all duration-300 shadow-md"
-            >
+            <Button onClick={exportTransactions} className="inc-btn2">
               <Download size={24} />
               Export
             </Button>
@@ -517,7 +514,7 @@ export default function Transactions() {
                             </span>
                             <button
                               onClick={() => toggleDescription(index)}
-                              className="ml-2 text-blue-600 hover:underline text-sm"
+                              className="ml-2 font-bold text-blue-600 dark:text-blue-300 hover:underline text-sm"
                             >
                               {expandedIndex === index
                                 ? "Show Less"
