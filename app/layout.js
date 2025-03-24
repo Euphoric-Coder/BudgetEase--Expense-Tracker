@@ -5,7 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/Homepage/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import ClerkAuthHandler from "@/components/ClerkAuthHandler";
+import ClerkAuthHandler from "@/components/FirstUserHandler";
 
 const outfit = Outfit({
   subsets: ["latin"],
