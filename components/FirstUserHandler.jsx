@@ -3,7 +3,7 @@
 import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
 
-export default function ClerkAuthHandler() {
+export default function FirstUserHandler() {
   const { user, isSignedIn } = useUser();
 
   useEffect(() => {

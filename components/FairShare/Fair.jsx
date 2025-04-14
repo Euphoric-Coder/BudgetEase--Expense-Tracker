@@ -18,22 +18,31 @@ const initialFriends = [
     id: "1",
     name: "John Doe",
     email: "john@example.com",
-    avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=faces",
+    avatar: "https://randomuser.me/api/portraits/men/1.jpg",
   },
   {
     id: "2",
     name: "Jane Smith",
     email: "jane@example.com",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces",
+    avatar: "https://randomuser.me/api/portraits/women/2.jpg",
   },
   {
     id: "3",
     name: "Mike Johnson",
     email: "mike@example.com",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=faces",
+    avatar: "https://randomuser.me/api/portraits/men/3.jpg",
+  },
+  {
+    id: "4",
+    name: "Emily Davis",
+    email: "emily@example.com",
+    avatar: "https://randomuser.me/api/portraits/women/4.jpg",
+  },
+  {
+    id: "5",
+    name: "Chris Brown",
+    email: "chris@example.com",
+    avatar: "https://randomuser.me/api/portraits/men/5.jpg",
   },
 ];
 
@@ -75,13 +84,17 @@ const categories = [
   "Other",
 ];
 
-export default function FairShare() {
+export default function SplitExpenses() {
   const [friends] = useState(initialFriends);
   const [expenses] = useState(initialExpenses);
   const [showAddExpense, setShowAddExpense] = useState(false);
   const [showAddFriend, setShowAddFriend] = useState(false);
   const [selectedFriends, setSelectedFriends] = useState([]);
   const [splitType, setSplitType] = useState("equal");
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("");
+  const [paidBy, setPaidBy] = useState([]);
   const [newExpense, setNewExpense] = useState({
     description: "",
     amount: "",
@@ -96,6 +109,7 @@ export default function FairShare() {
 
   const handleAddExpense = (e) => {
     e.preventDefault();
+    console.log(newExpense);
     setShowAddExpense(false);
     setNewExpense({
       description: "",

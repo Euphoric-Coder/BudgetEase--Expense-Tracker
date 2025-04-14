@@ -5,11 +5,9 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/Homepage/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import ClerkAuthHandler from "@/components/FirstUserHandler";
+import FirstUserHandler from "@/components/FirstUserHandler";
 
-const outfit = Outfit({
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "BudgetEase",
@@ -23,9 +21,9 @@ export default function RootLayout({ children }) {
       // signInForceRedirectUrl="/dashboard" // Redirect to the Dashboard after sign in
       // signUpForceRedirectUrl="/dashboard" // Redirect to the Dashboard after sign up
     >
-      <ClerkAuthHandler />
+      <FirstUserHandler />
       <html lang="en" suppressHydrationWarning>
-        <body className={`${outfit.className}`}>
+        <body className={`${inter.className}`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

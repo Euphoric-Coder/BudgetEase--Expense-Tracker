@@ -9,7 +9,6 @@ import { Settings } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
 import { ScanText } from "lucide-react";
-import CsvDataTable from "./CsvDataTable";
 import RecieptUpload from "./RecieptUpload";
 import RecieptDataTable from "./RecieptDataTable";
 import { v4 as uuidv4 } from "uuid";
