@@ -10,7 +10,8 @@
     "lint": "next lint",
     "db": "npx drizzle-kit push",
     "db:studio": "npx drizzle-kit studio",
-    "email": "email dev"
+    "email": "email dev",
+    "inngest": "npx inngest-cli@latest dev"
   },
   "dependencies": {
     "@clerk/elements": "^0.22.5",
