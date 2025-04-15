@@ -52,18 +52,11 @@ const ExpensesDashboard = () => {
     console.log(userList);
     console.log(monthlyData);
 
-    const result = await db
-      .select({
-        ...getTableColumns(Budgets),
-        totalSpend: sql`sum(${Expenses.amount})`.mapWith(Number),
-        totalItem: sql`count(${Expenses.id})`.mapWith(Number),
-      })
-      .from(Budgets)
-      .leftJoin(Expenses, eq(Budgets.id, Expenses.budgetId))
-      .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress))
-      .where(eq(Budgets.id, params.id))
-      .groupBy(Budgets.id);
-    setBudgetInfo(result[0]);
+    const individualBudget = await fetch(`/api/budgets/${params.id}`);
+    const budgetData = await individualBudget.json();
+    console.log(budgetData);
+
+    setBudgetInfo(budgetData);
     getListOfExpenses();
   };
 
