@@ -184,6 +184,8 @@ export default function SplitExpenses() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         {friends.map((friend) => {
           const balance = calculateBalance(friend.id);
+          if(balance === 0) return null; // Skip if balance is zero
+          
           return (
             <div key={friend.id} className="bg-white rounded-xl p-6 shadow-lg">
               <div className="flex items-start gap-4 mb-4">

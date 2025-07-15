@@ -86,7 +86,7 @@ export const checkExpiredItems = inngest.createFunction(
 
 export const checkBudgetPercentage = inngest.createFunction(
   { id: "check-budget-percentage" },
-  { cron: "TZ=Asia/Kolkata 0/1 * * * *" }, // Every minute
+  { cron: "TZ=Asia/Kolkata 0 */6 * * *" }, // Every 6 hours at 0 minutes
   async ({ step }) => {
     await step.run("fetch-budget-percentage", async () => {
       return await budgetPercentage();
