@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Popover,
   PopoverContent,
@@ -14,32 +14,37 @@ const NotificationTab = () => {
   const [unreadCount, setUnreadCount] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("all");
+  const intervalSet = useRef(false);
+  const lastFetched = useRef(0);
 
-  // Fetch notifications on component mount
+  // Fetch notifications on component mount + refresh every 2 hours
   useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await fetch("/api/notifications");
-        if (!response.ok) {
-          // console.error("Failed to fetch notifications:", response.status);
-          setNotifications([]);
-          return;
-        }
-        const data = await response.json();
-        setNotifications(Array.isArray(data) ? data : []);
-        setUnreadCount(data.filter((n) => !n.read).length);
-      } catch (error) {
-        // console.error("Error fetching notifications:", error);
-        setNotifications([]);
-      }
-    };
+    if (intervalSet.current) return;
+    intervalSet.current = true;
 
-    fetchNotifications();
-    const intervalId = setInterval(fetchNotifications, 5000); // Fetch every 5 seconds
+    fetchNotifications(); // Initial fetch
 
-    return () => clearInterval(intervalId); // Cleanup interval on unmount
+    const intervalId = setInterval(fetchNotifications, 2 * 60 * 60 * 1000); // every 2 hours
+
+    return () => clearInterval(intervalId);
   }, []);
 
+  const fetchNotifications = async () => {
+    try {
+      const response = await fetch("/api/notifications");
+      if (!response.ok) {
+        // console.error("Failed to fetch notifications:", response.status);
+        setNotifications([]);
+        return;
+      }
+      const data = await response.json();
+      setNotifications(Array.isArray(data) ? data : []);
+      setUnreadCount(data.filter((n) => !n.read).length);
+    } catch (error) {
+      // console.error("Error fetching notifications:", error);
+      setNotifications([]);
+    }
+  };
 
   // Filtered and searched notifications
   const filteredNotifications = notifications.filter((notification) => {
@@ -99,8 +104,19 @@ const NotificationTab = () => {
     }
   };
 
+  // Throttle API when popover is opened
+  const handlePopoverOpen = (open) => {
+    if (!open) return;
+    const now = Date.now();
+    if (now - lastFetched.current > 5 * 60 * 1000) {
+      // Fetch only if 5 mins passed since last manual fetch
+      fetchNotifications();
+      lastFetched.current = now;
+    }
+  };
+
   return (
-    <Popover>
+    <Popover onOpenChange={handlePopoverOpen}>
       <PopoverTrigger
         className="m-2 relative flex h-10 w-10 md:h-14 md:w-14 items-center justify-center rounded-full bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-950 dark:to-gray-950 shadow-xl hover:shadow-2xl transition-transform transform hover:scale-110 focus:outline-none"
         aria-label="Open notifications"
