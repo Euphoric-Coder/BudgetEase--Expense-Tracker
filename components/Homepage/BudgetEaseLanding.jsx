@@ -5,6 +5,7 @@ import {
   CheckCircle,
   Star,
   Calendar,
+  LogOut,
 } from "lucide-react";
 import {
   features,
@@ -17,8 +18,18 @@ import {
 } from "@/lib/budgetData";
 import { ModeToggle } from "../ThemeButton";
 import Image from "next/image";
+import {
+  SignInButton,
+  SignOutButton,
+  SignUpButton,
+  useUser,
+} from "@clerk/nextjs";
+import { UserButtonMenu } from "../UserButton";
+import Link from "next/link";
 
 const BudgetEaseLanding = ({ onGetStarted, onSignIn, onBookDemo }) => {
+  const { user, isSignedIn } = useUser();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Header */}
@@ -26,16 +37,21 @@ const BudgetEaseLanding = ({ onGetStarted, onSignIn, onBookDemo }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <Image
-                src="/favicon.png"
-                alt="BudgetEase Logo"
-                width={500}
-                height={400}
-                className="w-10 h-10"
-              />
-              <span className="text-xl font-bold text-slate-900 dark:text-white">
-                BudgetEase
-              </span>
+              <Link
+                href="/"
+                className="hover:scale-105 transition-all duration-300 ease-in-out flex items-center gap-3"
+              >
+                <Image
+                  src={"/favicon.png"}
+                  alt="Logo of BudgetEase"
+                  width={35}
+                  height={35}
+                  className="drop-shadow-lg sm:w-[50px] sm:h-[50px]"
+                />
+                <span className="text-transparent text-xl bg-clip-text bg-gradient-to-r from-teal-400 via-yellow-500 to-red-500 font-extrabold hover:animate-pulse dark:from-purple-400 dark:via-pink-500 dark:to-blue-500">
+                  BudgetEase
+                </span>
+              </Link>
             </div>
             <nav className="hidden md:flex items-center gap-8">
               <a
@@ -57,18 +73,45 @@ const BudgetEaseLanding = ({ onGetStarted, onSignIn, onBookDemo }) => {
                 Reviews
               </a>
               <ModeToggle />
-              <button
-                onClick={onSignIn}
-                className="text-sm text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
-              >
-                Sign In
-              </button>
-              <button
-                onClick={onGetStarted}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-blue-500/25"
-              >
-                Get Started
-              </button>
+              {isSignedIn ? (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={onBookDemo}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-blue-500/25"
+                  >
+                    Book a Demo
+                  </button>
+                  <SignOutButton>
+                    <button
+                      onClick={onGetStarted}
+                      className="flex bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-blue-500/25"
+                    >
+                      <LogOut />
+                      Logout
+                    </button>
+                  </SignOutButton>
+                  <UserButtonMenu />
+                </div>
+              ) : (
+                <div className="flex items-center gap-6">
+                  <SignInButton>
+                    <button
+                      onClick={onSignIn}
+                      className="text-sm text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+                    >
+                      Login
+                    </button>
+                  </SignInButton>
+                  <SignUpButton>
+                    <button
+                      onClick={onGetStarted}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-blue-500/25"
+                    >
+                      Get Started
+                    </button>
+                  </SignUpButton>
+                </div>
+              )}
             </nav>
           </div>
         </div>

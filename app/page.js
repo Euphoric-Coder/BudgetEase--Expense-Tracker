@@ -2,6 +2,7 @@
 
 import AnimatedScrollDashboardImg from "@/components/Homepage/AnimatedScrollDashboardImg";
 import AppTitle from "@/components/Homepage/AppTitle";
+import BudgetEaseLanding from "@/components/Homepage/BudgetEaseLanding";
 import CTASection from "@/components/Homepage/CTA";
 import Header from "@/components/Homepage/Header";
 import Hero from "@/components/Homepage/Hero";
@@ -10,10 +11,9 @@ import KeyFeatures from "@/components/Homepage/KeyFeatures";
 import React, { useEffect } from "react";
 
 const page = () => {
-
   return (
     <div>
-      <Header />
+      {/* <Header />
       <main className="mt-20">
         <AppTitle />
         <Hero />
@@ -21,7 +21,8 @@ const page = () => {
         <KeyFeatures />
         <HowItWorks />
         <CTASection />
-      </main>
+      </main> */}
+      <BudgetEaseLanding />
     </div>
   );
 };
